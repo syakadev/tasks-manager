@@ -1,0 +1,54 @@
+<?php
+
+namespace {{ namespace }};
+
+{{ factoryImport }}
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends Model
+{
+    {{ factory }}
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        //
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        //
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        //
+    ];
+
+    // Define relationships here
+
+    // public function parent()
+    // {
+    //     return $this->belongsTo(ParentModel::class);
+    // }
+
+    // public function children()
+    // {
+    //     return $this->hasMany(ChildModel::class);
+    // }
+
+    // public function manyToManyRelationship()
+    // {
+    //     return $this->belongsToMany(RelatedModel::class);
+    // }
+}
