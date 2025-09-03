@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('teams', function (Blueprint $table) {
+            $table->id();
+            // author project and task
+            $table->unsignedBigInteger('manager_id');
+            // max 3 contribution
+            $table->unsignedBigInteger('user1_id')->nullable();
+            $table->unsignedBigInteger('user2_id')->nullable();
+            $table->unsignedBigInteger('user3_id')->nullable();
+            $table->timestamps();
+
+            // Mendefinisikan
+            // foreign key
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user1_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user2_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user3_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('teams');
+    }
+};

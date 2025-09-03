@@ -76,6 +76,29 @@
                             @enderror
                         </div>
 
+                        <!-- Status -->
+                        <div class="mb-4">
+                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                {{ __('Status') }}
+                            </label>
+                            <select
+                                name="status"
+                                id="status"
+                                class="mt-1 block w-full rounded-md shadow-sm border-gray-300
+                                       dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300
+                                       focus:border-indigo-300 focus:ring focus:ring-indigo-200
+                                       focus:ring-opacity-50"
+                            >
+                                <option value="todo" {{ old('status', $project->status) == 'todo' ? 'selected' : '' }}>Todo</option>
+                                <option value="doing" {{ old('status', $project->status) == 'doing' ? 'selected' : '' }}>Doing</option>
+                                <option value="done" {{ old('status', $project->status) == 'done' ? 'selected' : '' }}>Done</option>
+                            </select>
+                            @error('status')
+                                <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
                         <!-- Submit -->
                         <div class="flex items-center justify-end mt-4">
                             <button type="submit"

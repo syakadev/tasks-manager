@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Projects extends Model
+class Team extends Model
 {
     //
     /**
@@ -13,13 +13,10 @@ class Projects extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'description',
-        'status',
-        'start_date',
-        'end_date',
-        'user_id',
-        'active'
+        'manager_id',
+        'user1_id',
+        'user2_id',
+        'user3_id'
     ];
 
     /**
@@ -40,19 +37,6 @@ class Projects extends Model
         //
     ];
 
-    //function tambahan
-    public function updateStatusIfAllTasksCompleted()
-    {
-        $totalTasks = $this->tasks()->count();
-        $completedTasks = $this->tasks()->where('status', 'done')->count();
-
-        $this->status = ($totalTasks > 0 && $totalTasks === $completedTasks)
-            ? 'done'
-            : 'todo';
-
-        $this->save();
-    }
-
     // Define relationships here
 
     // public function parent()
@@ -60,15 +44,10 @@ class Projects extends Model
     //     return $this->belongsTo(ParentModel::class);
     // }
 
-    public function tasks()
-    {
-        return $this->hasMany(tasks::class, 'project_id');
-    }
-
-    public function team()
-    {
-        return $this->hasOne(team::class, 'team_id');
-    }
+    // public function children()
+    // {
+    //     return $this->hasMany(ChildModel::class);
+    // }
 
     // public function manyToManyRelationship()
     // {

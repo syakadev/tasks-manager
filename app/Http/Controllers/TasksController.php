@@ -35,7 +35,7 @@ class TasksController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'project_id' => 'required|exists:projects,id',
         ]);
 

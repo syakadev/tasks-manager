@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Projects;
 use App\Models\Tasks;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Xml\Project;
@@ -15,7 +16,9 @@ class ProjectsController extends Controller
      */
     public function index()
     {
+        Projects::where('end_date', '<', Carbon::now())->delete();
         $projects = Projects::all();
+
         return view('projects.index', compact('projects'));
     }
 
@@ -73,12 +76,25 @@ class ProjectsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'end_date' => 'required|date',
+            'status' => 'required|in:todo,doing,done',
         ]);
 
-        $project->update($request->all());
 
-        return redirect()->route('projects.index')
-            ->with('success', 'Project updated successfully.');
+         // Jika user mencoba mengubah status menjadi 'selesai'
+    if ($request->status == 'done') {
+        $totalTasks = $project->tasks()->count();
+        $completedTasks = $project->tasks()->where('status', 'yes')->count();
+
+        if ($totalTasks === 0 || $totalTasks !== $completedTasks) {
+            return back()->with('error', 'Tidak bisa menyelesaikan project, masih ada task yang belum selesai.');
+        }
+
+    }
+
+            $project->update($request->all());
+            return redirect()->route('projects.index')
+                ->with('success', 'Project updated successfully.');
+
     }
 
     /**
