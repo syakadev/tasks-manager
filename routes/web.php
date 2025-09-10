@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+// use App\Models\Team;
 
 Route::get('/', function () { return view('welcome'); })->middleware('auth');
 
@@ -13,6 +15,7 @@ Route::group([
 ], function () {
     Route::resource('projects', ProjectsController::class);
     Route::resource('tasks', TasksController::class);
+    Route::resource('team', TeamController::class);
     Route::get('/tasks/create/{project}', [TasksController::class, 'create'])->name('tasks.create');
     Route::resource('projects.tasks', TasksController::class);
 });

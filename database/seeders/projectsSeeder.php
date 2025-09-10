@@ -17,7 +17,7 @@ class projectsSeeder extends Seeder
             'name' => 'Website Redesign',
             'description' => 'Redesign the company website for a modern look and improved user experience.',
             'status' => 'todo',
-            'end_date' => '2024-03-31',
+            'end_date' => '2026-03-31',
             'user_id' => 1,
         ]);
 
@@ -25,7 +25,7 @@ class projectsSeeder extends Seeder
             'name' => 'Mobile App Development',
             'description' => 'Develop a new mobile application for both iOS and Android platforms.',
             'status' => 'doing',
-            'end_date' => '2024-06-30',
+            'end_date' => '2026-06-30',
             'user_id' => 1,
         ]);
 

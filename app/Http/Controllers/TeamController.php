@@ -12,7 +12,9 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        $teams = Team::all();
+
+        return view('teams.index', compact('teams'));
     }
 
     /**
@@ -20,7 +22,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        //
+        return view('teams.create');
     }
 
     /**
@@ -28,15 +30,23 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        Team::create($request->all());
+
+        return redirect()->route('teams.index')
+            ->with('success', 'Team created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Team $team)
+    public function show(team $team)
     {
-        //
+        return view('teams.delete', compact('team'));
     }
 
     /**
@@ -44,7 +54,7 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
-        //
+        return view('teams.edit', compact('team'));
     }
 
     /**
@@ -52,7 +62,20 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'manager_id' => 'required|exists:users,id',
+            'user1_id' => 'nullable|exists:users,id',
+            'user2_id' => 'nullable|exists:users,id',
+            'user3_id' => 'nullable|exists:users,id',
+        ]);
+
+        $team->update($request->all());
+
+        return redirect()->route('team.edit', $team->id)
+            ->with('success', 'Team updated successfully.');
+
     }
 
     /**
@@ -60,6 +83,10 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        //
+        $team->delete();
+
+        return redirect()->route('teams.index')
+            ->with('success', 'Team deleted successfully.');
+
     }
 }
