@@ -10,9 +10,15 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
+        <!-- Styles -->
         <script src="https://cdn.tailwindcss.com"></script>
-
-        <!-- Scripts -->
+        <style>
+            body {
+                font-family: 'Figtree', sans-serif;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            }
+        </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
         {{ $slot }}
