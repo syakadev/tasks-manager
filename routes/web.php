@@ -7,17 +7,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 // use App\Models\Team;
 
-Route::get('/', function () { return view('welcome'); })->middleware('auth');
+Route::get('/', function () { return view('projects.index'); })->middleware('auth');
 
 
 Route::group([
-    'middleware' => ['isAuth'], // Middleware untuk semua rute dalam gru
+    'middleware' => ['isAuth'], // Middleware untuk semua rute dalam grup
 ], function () {
     Route::resource('projects', ProjectsController::class);
     Route::resource('tasks', TasksController::class);
-    Route::resource('team', TeamController::class);
+    Route::resource('teams', TeamController::class);
     Route::get('/tasks/create/{project}', [TasksController::class, 'create'])->name('tasks.create');
     Route::resource('projects.tasks', TasksController::class);
+    Route::resource('projects.teams', TeamController::class);
+    Route::delete('/projects/{project}/members/{member}', [TeamController::class, 'removeMember'])->name('projects.teams.removeMember');
+    Route::get('/projects/{project}/add-member', [TeamController::class, 'addMemberForm'])->name('projects.teams.addMemberForm');
+    Route::post('/projects/{project}/add-member', [TeamController::class, 'storeMember'])->name('projects.teams.storeMember');
 });
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login');

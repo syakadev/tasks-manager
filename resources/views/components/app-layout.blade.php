@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -49,21 +49,23 @@
 <div class="flex h-screen" id="main-container">
 
     <!-- Sidebar -->
-    <aside id="sidebar" 
+    <aside id="sidebar"
            class="sidebar bg-purple-700 text-white w-64 p-6 fixed inset-y-0 left-0 md:relative md:left-0 z-40">
         <h2 class="text-2xl font-bold mb-6">Menu</h2>
         <nav class="space-y-3">
-            <a href="{{ route('projects.index') }}" 
+            <a href="{{ route('projects.index') }}"
                class="block px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-800 transition btn-anim">
                 Project
             </a>
-            <a href="{{ route('projects.create') }}" 
+            @if(Auth::user()->role === 'admin')
+            <a href="{{ route('projects.create') }}"
                class="block px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-800 transition btn-anim">
                 Create Project
             </a>
+            @endif
             <form method="POST" action="{{ route('logout') }}" class="mt-4">
                 @csrf
-                <button type="submit" 
+                <button type="submit"
                         class="w-full px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg btn-anim">
                     Logout
                 </button>
@@ -80,7 +82,7 @@
         <!-- Navbar -->
         <header class="bg-purple-800 text-white shadow-md p-4 flex justify-between items-center">
             <!-- Toggle button - selalu terlihat -->
-            <button id="toggleSidebar" 
+            <button id="toggleSidebar"
             class="p-2 rounded-md bg-purple-600 hover:bg-purple-700 transition">
             ☰
         </button>
@@ -126,7 +128,7 @@
             mainContainer.classList.remove("sidebar-closed", "sidebar-open");
             mainContent.classList.remove("md:ml-64");
             mainContent.classList.add("md:ml-0");
-            
+
             if (isSidebarOpen) {
                 sidebar.classList.remove("-translate-x-full");
                 overlay.classList.remove("hidden");
@@ -167,7 +169,7 @@
 
     // Handle window resize
     window.addEventListener('resize', updateSidebarState);
-    
+
     // Initialize sidebar state
     updateSidebarState();
 </script>

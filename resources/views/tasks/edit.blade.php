@@ -25,6 +25,9 @@
                                 id="name"
                                 value="{{ old('name', $task->name) }}"
                                 required
+                                @if(Auth::user()->role === 'user')
+                                    readonly
+                                @endif
                                 autofocus
                                 class="mt-1 block w-full rounded-md shadow-sm border-gray-300
                                        dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300

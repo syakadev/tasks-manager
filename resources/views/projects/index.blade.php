@@ -1,41 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(128, 90, 213, 0.15);
-        }
-        .btn-transition {
-            transition: all 0.2s ease;
-        }
-        .btn-transition:hover {
-            transform: scale(1.05);
-        }
-        .status-badge {
-            transition: all 0.3s ease;
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-purple-700 leading-tight">
@@ -64,9 +26,9 @@
                     <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500">
                         <div class="flex justify-between items-center">
                             <div>
-                                <p class="text-sm text-gray-500">Completed</p>
+                                <p class="text-sm text-gray-500">Done</p>
                                 <h3 class="text-2xl font-bold text-green-800">
-                                    {{ $projects->where('status', 'completed')->count() }}
+                                    {{ $projects->where('status', 'done')->count() }}
                                 </h3>
                             </div>
                             <div class="bg-green-100 p-3 rounded-full">
@@ -80,9 +42,9 @@
                     <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-blue-500">
                         <div class="flex justify-between items-center">
                             <div>
-                                <p class="text-sm text-gray-500">In Progress</p>
+                                <p class="text-sm text-gray-500">Doing</p>
                                 <h3 class="text-2xl font-bold text-blue-800">
-                                    {{ $projects->where('status', 'in progress')->count() }}
+                                    {{ $projects->where('status', 'doing')->count() }}
                                 </h3>
                             </div>
                             <div class="bg-blue-100 p-3 rounded-full">
@@ -96,9 +58,9 @@
                     <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-yellow-500">
                         <div class="flex justify-between items-center">
                             <div>
-                                <p class="text-sm text-gray-500">Pending</p>
+                                <p class="text-sm text-gray-500">Todo</p>
                                 <h3 class="text-2xl font-bold text-yellow-800">
-                                    {{ $projects->where('status', 'pending')->count() }}
+                                    {{ $projects->where('status', 'todo')->count() }}
                                 </h3>
                             </div>
                             <div class="bg-yellow-100 p-3 rounded-full">
@@ -172,7 +134,16 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <div class="flex justify-end space-x-3">
-                                                        <a href="{{ route('projects.edit', $project) }}" 
+                                                        <a href="{{ route('projects.teams.index', $project) }}"
+                                                           class="text-indigo-600 hover:text-indigo-900 btn-transition font-semibold"
+                                                           title="View Teams">
+                                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-3-3H8a3 3 0 00-3 3v2h5M17 11V9a2 2 0 00-2-2m0 4a2 2 0 01-2-2m0 0V5a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h2"></path>
+                                                            </svg>
+                                                        </a>
+
+                                                        @if(Auth::user()->role === 'admin')
+                                                        <a href="{{ route('projects.edit', $project) }}"
                                                            class="text-purple-600 hover:text-purple-900 btn-transition font-semibold"
                                                            title="Edit Project">
                                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +153,7 @@
                                                         <form action="{{ route('projects.destroy', $project) }}" method="POST" class="inline-block">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" 
+                                                            <button type="submit"
                                                                     class="text-red-600 hover:text-red-900 btn-transition font-semibold"
                                                                     onclick="return confirm('Are you sure you want to delete this project?')"
                                                                     title="Delete Project">
@@ -191,7 +162,8 @@
                                                                 </svg>
                                                             </button>
                                                         </form>
-                                                        <a href="{{ route('projects.show', $project) }}" 
+                                                        @endif
+                                                        <a href="{{ route('projects.show', $project) }}"
                                                            class="text-blue-600 hover:text-blue-900 btn-transition font-semibold"
                                                            title="View Details">
                                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,14 +190,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card-hover');
             const rows = document.querySelectorAll('tr.fade-in');
-            
+
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
                 }, index * 100);
             });
-            
+
             rows.forEach((row, index) => {
                 setTimeout(() => {
                     row.style.opacity = '1';
@@ -234,5 +206,3 @@
             });
         });
     </script>
-</body>
-</html>
