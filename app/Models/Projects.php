@@ -44,11 +44,11 @@ class Projects extends Model
     public function updateStatusIfAllTasksCompleted()
     {
         $totalTasks = $this->tasks()->count();
-        $completedTasks = $this->tasks()->where('status', 'done')->count();
+        $completedTasks = $this->tasks()->where('status', 'yes')->count();
 
         $this->status = ($totalTasks > 0 && $totalTasks === $completedTasks)
-            ? 'done'
-            : 'todo';
+            ? 'completed'
+            : 'in progress';
 
         $this->save();
     }
@@ -62,12 +62,12 @@ class Projects extends Model
 
     public function tasks()
     {
-        return $this->hasMany(tasks::class, 'project_id');
+        return $this->hasMany(Tasks::class, 'project_id');
     }
 
     public function team()
     {
-        return $this->hasOne(team::class, 'team_id');
+        return $this->belongsTo(Team::class);
     }
 
     // public function manyToManyRelationship()

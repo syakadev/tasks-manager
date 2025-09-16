@@ -47,5 +47,13 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Get all of the projects for the User.
+     */
+    public function projects()
+    {
+        return $this->hasMany(Projects::class);
+    }
+
 
 }

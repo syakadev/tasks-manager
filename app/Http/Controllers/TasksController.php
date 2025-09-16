@@ -4,25 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Tasks;
 use App\Models\Projects;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-
-        return view('tasks.index', compact('tasks'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */
         public function create( $projectId)
         {
+            if (Auth::user()->role !== 'admin') {
+                return redirect()->route('projects.show', $projectId)->with('error', 'You are not authorized to perform this action.');
+            }
             $project = $projectId;
 
             return view('tasks.create', compact('project'));
@@ -33,6 +27,9 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('projects.show', $request->project_id)->with('error', 'You are not authorized to perform this action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -72,23 +69,33 @@ class TasksController extends Controller
      */
     public function update(Request $request, Projects $project, Tasks $task)
     {
-        $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'status' => 'required|in:no,yes',
-        ]);
-
-        $task->update($request->all());
+        if (Auth::user()->role === 'admin') {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'status' => 'required|in:no,yes',
+            ]);
+            $task->update($request->all());
+        } else {
+            $request->validate([
+                'description' => 'nullable|string',
+                'status' => 'required|in:no,yes',
+            ]);
+            $task->update($request->only('description', 'status'));
+        }
 
         return redirect()->route('projects.show', $project->id)
         ->with('success', 'Task updated successfully.');
-            }
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Projects $project, Tasks $task)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('projects.show', $project->id)->with('error', 'You are not authorized to perform this action.');
+        }
         $task->delete();
 
         return redirect()->route('projects.show', $project->id)

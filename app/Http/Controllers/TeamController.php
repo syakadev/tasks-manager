@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
@@ -22,6 +23,9 @@ class TeamController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
+        }
         return view('teams.create');
     }
 
@@ -30,6 +34,9 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -54,6 +61,9 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
+        }
         return view('teams.edit', compact('team'));
     }
 
@@ -62,6 +72,9 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -83,6 +96,9 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
+        }
         $team->delete();
 
         return redirect()->route('teams.index')

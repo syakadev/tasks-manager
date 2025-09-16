@@ -38,9 +38,9 @@ class Tasks extends Model
 
     // Define relationships here
 
-    public function porjects()
+    public function project()
     {
-        return $this->belongsTo(Projects::class);
+        return $this->belongsTo(Projects::class, 'project_id');
     }
 
     // public function children()
