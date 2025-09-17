@@ -1,6 +1,6 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         .card-hover {
             transition: all 0.3s ease;
@@ -44,13 +44,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes slideIn {
-            from { 
-                opacity: 0; 
-                transform: translateX(-20px); 
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
             }
-            to { 
-                opacity: 1; 
-                transform: translateX(0); 
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
         .member-item {
@@ -89,7 +89,7 @@
                                 </h3>
                                 @if(Auth::user()->role === 'admin')
                                     @if($project->team && count($members) < 3)
-                                    <a href="{{ route('projects.teams.addMemberForm', ['project' => $project]) }}" 
+                                    <a href="{{ route('projects.teams.addMemberForm', ['project' => $project]) }}"
                                        class="btn-primary px-6 py-3 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center">
                                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -150,19 +150,21 @@
                                             </div>
                                         </div>
                                         <div class="flex space-x-3">
-                                            {{-- Action to Remove Member --}}
-                                            <form action="{{ route('projects.teams.removeMember', ['project' => $project, 'member' => $member]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this member from the team?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" 
-                                                        class="btn-danger px-4 py-2 text-white rounded-lg font-semibold transition-all duration-300 flex items-center"
-                                                        title="Remove Member">
-                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                    </svg>
-                                                    Remove
-                                                </button>
-                                            </form>
+                                            @if(Auth::user()->role === 'admin')
+                                                {{-- Action to Remove Member --}}
+                                                <form action="{{ route('projects.teams.removeMember', ['project' => $project, 'member' => $member]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this member from the team?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                            class="btn-danger px-4 py-2 text-white rounded-lg font-semibold transition-all duration-300 flex items-center"
+                                                            title="Remove Member">
+                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                        </svg>
+                                                        Remove
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </li>
                                 @empty
@@ -174,7 +176,7 @@
                                         <p class="mt-2 text-sm text-purple-600">Add members to build your project team.</p>
                                         @if(Auth::user()->role === 'admin')
                                             <div class="mt-6">
-                                                <a href="{{ route('projects.teams.addMemberForm', ['project' => $project]) }}" 
+                                                <a href="{{ route('projects.teams.addMemberForm', ['project' => $project]) }}"
                                                    class="btn-primary px-6 py-3 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 inline-flex items-center">
                                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -198,21 +200,21 @@
                 const cards = document.querySelectorAll('.card-hover');
                 const members = document.querySelectorAll('.member-item');
                 const buttons = document.querySelectorAll('.btn-primary, .btn-danger');
-                
+
                 cards.forEach((card, index) => {
                     setTimeout(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     }, index * 100);
                 });
-                
+
                 members.forEach((member, index) => {
                     setTimeout(() => {
                         member.style.opacity = '1';
                         member.style.transform = 'translateY(0)';
                     }, index * 50);
                 });
-                
+
                 buttons.forEach((button, index) => {
                     setTimeout(() => {
                         button.style.opacity = '1';
