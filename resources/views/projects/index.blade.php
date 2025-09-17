@@ -7,7 +7,6 @@
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <!-- Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-purple-500">
                         <div class="flex justify-between items-center">
@@ -72,10 +71,8 @@
                     </div>
                 </div>
 
-                <!-- Projects Table -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl">
                     <div class="p-6">
-                        <!-- Cek apakah ada project -->
                         @if ($projects->isEmpty())
                             <div class="text-center py-12">
                                 <svg class="mx-auto h-16 w-16 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,7 +183,6 @@
     </x-app-layout>
 
     <script>
-        // Animasi untuk elemen yang masuk
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card-hover');
             const rows = document.querySelectorAll('tr.fade-in');

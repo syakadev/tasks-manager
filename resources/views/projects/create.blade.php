@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -65,14 +56,11 @@
             }
         }
     </style>
-</head>
-<body class="bg-gray-50">
     <x-app-layout>
-        <x-slot name="header">
             <h2 class="font-semibold text-xl text-purple-700 leading-tight slide-in">
                 {{ __('Create New Project') }}
             </h2>
-        </x-slot>
+
 
         <div class="py-8 fade-in">
             <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
@@ -81,7 +69,6 @@
                         <form method="POST" action="{{ route('projects.store') }}" class="space-y-6">
                             @csrf
 
-                            <!-- Name -->
                             <div class="mb-6">
                                 <label for="name" class="block text-sm font-medium text-purple-800 mb-3">Project Name</label>
                                 <input type="text" name="name" id="name"
@@ -92,7 +79,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Description -->
                             <div class="mb-6">
                                 <label for="description" class="block text-sm font-medium text-purple-800 mb-3">Description</label>
                                 <textarea name="description" id="description" rows="5" 
@@ -103,7 +89,6 @@
                                 @enderror
                             </div>
 
-                            <!-- End Date -->
                             <div class="mb-6">
                                 <label for="end_date" class="block text-sm font-medium text-purple-800 mb-3">End Date</label>
                                 <input type="date" name="end_date" id="end_date"
@@ -131,18 +116,15 @@
         </div>
 
         <script>
-            // Animasi untuk input fields
             document.addEventListener('DOMContentLoaded', function() {
                 const inputs = document.querySelectorAll('.input-field');
                 const form = document.querySelector('form');
                 
-                // Animasi untuk form elements
                 setTimeout(() => {
                     form.style.opacity = '1';
                     form.style.transform = 'translateY(0)';
                 }, 100);
                 
-                // Focus effect untuk inputs
                 inputs.forEach(input => {
                     input.addEventListener('focus', () => {
                         input.parentElement.classList.add('transform', 'translate-y-1');
@@ -153,7 +135,6 @@
                     });
                 });
                 
-                // Date input styling
                 const dateInput = document.getElementById('end_date');
                 if (dateInput) {
                     dateInput.addEventListener('focus', () => {

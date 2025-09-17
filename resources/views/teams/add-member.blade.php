@@ -98,7 +98,6 @@
                         <form method="POST" action="{{ route('projects.teams.storeMember', ['project' => $project]) }}" class="space-y-6">
                             @csrf
 
-                            <!-- User Selection -->
                             <div class="mb-6">
                                 <label for="user_id" class="block text-sm font-medium text-purple-800 mb-3">
                                     <span class="flex items-center">
@@ -146,18 +145,15 @@
         </div>
 
         <script>
-            // Animasi untuk form elements
             document.addEventListener('DOMContentLoaded', function() {
                 const select = document.getElementById('user_id');
                 const form = document.querySelector('form');
                 
-                // Animasi untuk form
                 setTimeout(() => {
                     form.style.opacity = '1';
                     form.style.transform = 'translateY(0)';
                 }, 100);
                 
-                // Focus effect untuk select
                 if (select) {
                     select.addEventListener('focus', () => {
                         select.parentElement.classList.add('transform', 'translate-y-1');
@@ -170,7 +166,6 @@
                     });
                 }
 
-                // Enhanced select styling
                 const style = document.createElement('style');
                 style.textContent = `
                     select option {

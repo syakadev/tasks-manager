@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -48,7 +47,6 @@
 
 <div class="flex h-screen" id="main-container">
 
-    <!-- Sidebar -->
     <aside id="sidebar"
            class="sidebar bg-purple-700 text-white w-64 p-6 fixed inset-y-0 left-0 md:relative md:left-0 z-40">
         <h2 class="text-2xl font-bold mb-6">Menu</h2>
@@ -73,15 +71,11 @@
         </nav>
     </aside>
 
-    <!-- Overlay (mobile) -->
     <div id="overlay" class="overlay fixed inset-0 bg-black bg-opacity-50 hidden z-30 md:hidden"></div>
 
-    <!-- Content Area -->
     <div class="main-content flex-1 flex flex-col md:ml-0 transition-all duration-300">
 
-        <!-- Navbar -->
         <header class="bg-purple-800 text-white shadow-md p-4 flex justify-between items-center">
-            <!-- Toggle button - selalu terlihat -->
             <button id="toggleSidebar"
             class="p-2 rounded-md bg-purple-600 hover:bg-purple-700 transition">
             ☰
@@ -91,7 +85,6 @@
         </div>
     </header>
 
-        <!-- Page Content -->
         <main class="p-6 flex-1 overflow-auto">
             {{ $slot }}
         </main>
@@ -108,7 +101,6 @@
 
     function updateSidebarState() {
         if (window.innerWidth >= 768) {
-            // Desktop view
             overlay.classList.add("hidden");
             if (isSidebarOpen) {
                 sidebar.classList.remove("transform", "-translate-x-full");
@@ -124,7 +116,6 @@
                 mainContent.classList.remove("md:ml-64");
             }
         } else {
-            // Mobile view
             mainContainer.classList.remove("sidebar-closed", "sidebar-open");
             mainContent.classList.remove("md:ml-64");
             mainContent.classList.add("md:ml-0");
@@ -167,10 +158,8 @@
 
     overlay.addEventListener("click", closeSidebar);
 
-    // Handle window resize
     window.addEventListener('resize', updateSidebarState);
 
-    // Initialize sidebar state
     updateSidebarState();
 </script>
 

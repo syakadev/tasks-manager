@@ -79,10 +79,8 @@
                         <form method="POST" action="{{ route('tasks.store') }}" class="space-y-6">
                             @csrf
 
-                            <!-- Project ID (hidden) -->
                             <input type="hidden" name="project_id" value="{{ $project }}">
 
-                            <!-- Name -->
                             <div class="mb-6">
                                 <label for="name" class="block text-sm font-medium text-purple-800 mb-3">
                                     Task Name
@@ -95,7 +93,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Description -->
                             <div class="mb-6">
                                 <label for="description" class="block text-sm font-medium text-purple-800 mb-3">
                                     Description
@@ -108,7 +105,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Actions -->
                             <div class="flex items-center justify-end mt-8 pt-6 border-t border-purple-100 space-x-4">
                                 <a href="{{ route('projects.show', $project) }}" 
                                    class="btn-secondary px-6 py-3 text-white rounded-xl font-semibold shadow-lg transition-all duration-300">
@@ -136,18 +132,15 @@
         </div>
 
         <script>
-            // Animasi untuk form elements
             document.addEventListener('DOMContentLoaded', function() {
                 const inputs = document.querySelectorAll('.input-field');
                 const form = document.querySelector('form');
                 
-                // Animasi untuk form
                 setTimeout(() => {
                     form.style.opacity = '1';
                     form.style.transform = 'translateY(0)';
                 }, 100);
                 
-                // Focus effect untuk inputs
                 inputs.forEach(input => {
                     input.addEventListener('focus', () => {
                         input.parentElement.classList.add('transform', 'translate-y-1');

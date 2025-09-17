@@ -68,17 +68,16 @@
         }
     </style>
     <x-app-layout>
-        <x-slot name="header">
+
             <h2 class="font-semibold text-xl text-purple-700 leading-tight slide-in">
                 {{ __('Team for Project: ') }} <span class="text-purple-600">{{ $project->name }}</span>
             </h2>
-        </x-slot>
+
 
         <div class="py-8 fade-in">
             <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl card-hover">
                     <div class="p-8">
-                        {{-- Manager Section --}}
                         <div class="mb-8">
                             <div class="flex justify-between items-center border-b-2 border-purple-200 pb-4 mb-6">
                                 <h3 class="text-xl font-semibold text-purple-800 flex items-center">
@@ -124,7 +123,6 @@
                             @endif
                         </div>
 
-                        {{-- Members Section --}}
                         <div>
                             <h3 class="text-xl font-semibold text-purple-800 border-b-2 border-purple-200 pb-4 mb-6 flex items-center">
                                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,6 +148,8 @@
                                             </div>
                                         </div>
                                         <div class="flex space-x-3">
+
+
                                             @if(Auth::user()->role === 'admin')
                                                 {{-- Action to Remove Member --}}
                                                 <form action="{{ route('projects.teams.removeMember', ['project' => $project, 'member' => $member]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this member from the team?');">
@@ -165,6 +165,7 @@
                                                     </button>
                                                 </form>
                                             @endif
+
                                         </div>
                                     </li>
                                 @empty
@@ -195,7 +196,6 @@
         </div>
 
         <script>
-            // Animasi untuk elemen yang masuk
             document.addEventListener('DOMContentLoaded', function() {
                 const cards = document.querySelectorAll('.card-hover');
                 const members = document.querySelectorAll('.member-item');
