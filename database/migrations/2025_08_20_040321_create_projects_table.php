@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('end_date');
             $table->foreignId('user_id')->nullable()->index()->onDelete('cascade');
             $table->foreignId('team_id')->nullable()->index()->onDelete('cascade');
-            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
