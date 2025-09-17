@@ -17,13 +17,13 @@ class isAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        // // Pastikan pengguna sudah login dan merupakan admin
-        // if (Auth::check() ) {
-        //     return $next($request);
-        // }
+        // Pastikan pengguna sudah login
+        if (Auth::check() ) {
+            return $next($request);
+        }
 
-        // // Jika tidak, arahkan kembali atau tampilkan halaman error
-        // return redirect()->route('auth.login')->with('error', 'Akses ditolak.');
+        // Jika tidak, arahkan kembali atau tampilkan halaman error
+        return redirect()->route('auth.login')->with('error', 'Akses ditolak.');
         return $next($request);
     }
 }
