@@ -122,6 +122,12 @@
                     </button>
                 </div>
             </form>
+            <div class="mt-6 text-center">
+                <span class="text-gray-700 text-sm">Don't have an account?</span>
+                <a href="{{ route('register') }}" class="text-purple-600 hover:text-purple-800 font-medium ml-1">
+                    Register
+                </a>
+            </div>
         </div>
     </div>
 </body>
