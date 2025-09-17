@@ -19,18 +19,17 @@ class ProjectsController extends Controller
     {
         Projects::where('end_date', '<', Carbon::now())->delete();
 
-        if (Auth::user()->role === 'admin') {
-            $projects = Projects::all();
-        } else {
-            $userId = Auth::id();
-            $teamIds = Team::where('manager_id', $userId)
-                            ->orWhere('user1_id', $userId)
-                            ->orWhere('user2_id', $userId)
-                            ->orWhere('user3_id', $userId)
-                            ->pluck('id');
+      
 
-            $projects = Projects::whereIn('team_id', $teamIds)->get();
-        }
+        $userId = Auth::id();
+        $teamIds = Team::where('manager_id', $userId)
+                        ->orWhere('user1_id', $userId)
+                        ->orWhere('user2_id', $userId)
+                        ->orWhere('user3_id', $userId)
+                        ->pluck('id');
+
+        $projects = Projects::whereIn('team_id', $teamIds)->get();
+        
 
         return view('projects.index', compact('projects'));
     }
