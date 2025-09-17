@@ -31,93 +31,7 @@ class TeamController extends Controller
         return view('teams.index', compact('project', 'manager', 'members'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        if (Auth::user()->role !== 'admin') {
-            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
-        }
-        return view('teams.create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        if (Auth::user()->role !== 'admin') {
-            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
-        }
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
-
-        Team::create($request->all());
-
-        return redirect()->route('teams.index')
-            ->with('success', 'Team created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(team $team)
-    {
-        return view('teams.delete', compact('team'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Team $team)
-    {
-        if (Auth::user()->role !== 'admin') {
-            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
-        }
-        return view('teams.edit', compact('team'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Team $team)
-    {
-        if (Auth::user()->role !== 'admin') {
-            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
-        }
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'manager_id' => 'required|exists:users,id',
-            'user1_id' => 'nullable|exists:users,id',
-            'user2_id' => 'nullable|exists:users,id',
-            'user3_id' => 'nullable|exists:users,id',
-        ]);
-
-        $team->update($request->all());
-
-        return redirect()->route('team.edit', $team->id)
-            ->with('success', 'Team updated successfully.');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Team $team)
-    {
-        if (Auth::user()->role !== 'admin') {
-            return redirect()->route('teams.index')->with('error', 'You are not authorized to perform this action.');
-        }
-        $team->delete();
-
-        return redirect()->route('teams.index')
-            ->with('success', 'Team deleted successfully.');
-
-    }
 
     /**
      * Remove a specific member from the team.
@@ -135,7 +49,7 @@ class TeamController extends Controller
             } elseif ($team->user3_id == $member->id) {
                 $team->user3_id = null;
             }
-            
+
             $team->save();
 
             return redirect()->route('projects.teams.index', $project)->with('success', 'Member removed successfully.');
