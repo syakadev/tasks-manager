@@ -60,8 +60,15 @@ class ProjectsController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
+        $project = Projects::create($request->all());
 
-        Projects::create($request->all());
+        // Create a new team for the project with the authenticated user as manager
+        $team = new Team();
+        $team->manager_id = Auth::id();
+        $team->save();
+
+        $project->team_id = $team->id;
+        $project->save();
 
         return redirect()->route('projects.index')
             ->with('success', 'Project created successfully.');
