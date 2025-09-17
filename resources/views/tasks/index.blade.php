@@ -61,7 +61,6 @@
             </h2>
         </x-slot>
 
-        <!-- Project Description Card -->
         <div class="py-6 fade-in">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl card-hover border-l-4 border-purple-500">
@@ -80,12 +79,10 @@
             </div>
         </div>
 
-        <!-- Tasks Section -->
         <div class="pb-12 fade-in">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl">
                     <div class="p-6">
-                        <!-- Header dengan Tombol Create New Task -->
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <h1 class="text-2xl font-bold text-purple-800 flex items-center">
@@ -97,7 +94,6 @@
                                 <p class="text-purple-600 mt-2">Manage tasks for this project</p>
                             </div>
                             
-                            <!-- Tombol Create New Task (Hanya untuk Admin) -->
                             @if(Auth::user()->role === 'admin')
                             <a href="{{ route('tasks.create', $project->id) }}" 
                                class="btn-primary px-6 py-3 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center">
@@ -224,7 +220,6 @@
         </div>
 
         <script>
-            // Animasi untuk elemen yang masuk
             document.addEventListener('DOMContentLoaded', function() {
                 const cards = document.querySelectorAll('.card-hover');
                 const rows = document.querySelectorAll('tr.fade-in');

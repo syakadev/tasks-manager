@@ -89,7 +89,6 @@
                             @csrf
                             @method('PUT')
 
-                            <!-- Name -->
                             <div class="mb-6">
                                 <label for="name" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('Task Name') }}
@@ -116,7 +115,6 @@
                                 @endif
                             </div>
 
-                            <!-- Description -->
                             <div class="mb-6">
                                 <label for="description" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('Description') }}
@@ -132,7 +130,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Status -->
                             <div class="mb-6">
                                 <label for="status" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('Status') }}
@@ -150,7 +147,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Submit Button -->
                             <div class="flex items-center justify-end mt-8 pt-6 border-t border-purple-100">
                                 <button type="submit" 
                                         class="btn-primary px-8 py-3 text-white rounded-xl font-semibold shadow-lg transition-all duration-300">
@@ -169,18 +165,15 @@
         </div>
 
         <script>
-            // Animasi untuk form elements
             document.addEventListener('DOMContentLoaded', function() {
                 const inputs = document.querySelectorAll('.input-field, .select-field');
                 const form = document.querySelector('form');
                 
-                // Animasi untuk form
                 setTimeout(() => {
                     form.style.opacity = '1';
                     form.style.transform = 'translateY(0)';
                 }, 100);
                 
-                // Focus effect untuk inputs
                 inputs.forEach(input => {
                     if (!input.readOnly) {
                         input.addEventListener('focus', () => {
@@ -193,7 +186,6 @@
                     }
                 });
                 
-                // Status select styling
                 const statusSelect = document.getElementById('status');
                 if (statusSelect) {
                     statusSelect.addEventListener('focus', () => {

@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -84,14 +75,10 @@
             background-color: #f3e8ff;
         }
     </style>
-</head>
-<body class="bg-gray-50">
     <x-app-layout>
-        <x-slot name="header">
             <h2 class="font-semibold text-xl text-purple-700 leading-tight slide-in">
                 {{ __('Edit Project') }} - <span class="text-purple-600">{{ $project->name }}</span>
             </h2>
-        </x-slot>
 
         <div class="py-8 fade-in">
             <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
@@ -101,7 +88,6 @@
                             @csrf
                             @method('PUT')
 
-                            <!-- Name -->
                             <div class="mb-6">
                                 <label for="name" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('Project Name') }}
@@ -120,7 +106,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Description -->
                             <div class="mb-6">
                                 <label for="description" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('Description') }}
@@ -137,7 +122,6 @@
                                 @enderror
                             </div>
 
-                            <!-- End Date -->
                             <div class="mb-6">
                                 <label for="end_date" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('End Date') }}
@@ -154,7 +138,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Status -->
                             <div class="mb-6">
                                 <label for="status" class="block text-sm font-medium text-purple-800 mb-3">
                                     {{ __('Status') }}
@@ -173,7 +156,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Submit -->
                             <div class="flex items-center justify-end mt-8 pt-6 border-t border-purple-100">
                                 <button type="submit"
                                     class="btn-primary px-8 py-3 text-white rounded-xl font-semibold shadow-lg transition-all duration-300">
@@ -192,18 +174,15 @@
         </div>
 
         <script>
-            // Animasi untuk form elements
             document.addEventListener('DOMContentLoaded', function() {
                 const inputs = document.querySelectorAll('.input-field, .select-field');
                 const form = document.querySelector('form');
                 
-                // Animasi untuk form
                 setTimeout(() => {
                     form.style.opacity = '1';
                     form.style.transform = 'translateY(0)';
                 }, 100);
                 
-                // Focus effect untuk inputs
                 inputs.forEach(input => {
                     input.addEventListener('focus', () => {
                         input.parentElement.classList.add('transform', 'translate-y-1');
@@ -214,7 +193,6 @@
                     });
                 });
                 
-                // Date input styling
                 const dateInput = document.getElementById('end_date');
                 if (dateInput) {
                     dateInput.addEventListener('focus', () => {
@@ -225,7 +203,6 @@
                     });
                 }
                 
-                // Status select styling
                 const statusSelect = document.getElementById('status');
                 if (statusSelect) {
                     statusSelect.addEventListener('focus', () => {
@@ -238,5 +215,3 @@
             });
         </script>
     </x-app-layout>
-</body>
-</html>
